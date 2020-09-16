@@ -1,4 +1,3 @@
-import math
 nan = float('nan')
 
 # Function to add two numbers 
