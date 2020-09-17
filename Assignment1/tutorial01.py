@@ -80,16 +80,16 @@ def printGP(a = nan, r = nan, n = nan):
 	try:
 		a = float(a)
 		r = float(r)
-		n_new = int(n)
+		n = float(n)
 	except ValueError:
 		return 0
 
 	gp = []
 
-	if(float(n) - n_new != 0):
-		return 0
+	if(n % 1 == 0):
+		n = int(n)
 	else:
-		n = n_new
+		return 0
 
 	if(n < 0):
 		return 0
@@ -106,6 +106,18 @@ def printGP(a = nan, r = nan, n = nan):
 # Python 3 program to print AP.  arithmetic Progression
 #You cant use the inbuilt python function. Write your own function
 def printAP(a = nan, d = nan, n = nan): 
+	try:
+		a = float(a)
+		r = float(r)
+		n_new = int(n)
+	except ValueError:
+		return 0
+
+	if(float(n) - n_new != 0):
+		return 0
+	else:
+		n = n_new
+
 	ap=[]
 	return ap
 
