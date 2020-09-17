@@ -1,6 +1,8 @@
 import tutorial01 as A1
 
-actual_answers = [9, 12, 8, 7, "Invalid arguments passed.", "Invalid arguments passed.", "Division by 0 is not possible."]
+inf = float('inf')
+
+actual_answers = [9, 12, 8, 7, 0, 0, inf, [2, 6, 18, 54, 162]]
 student_answers = []
 
 test_case_1 = A1.add(4, 5)
@@ -18,12 +20,19 @@ student_answers.append(test_case_4)
 test_case_5 = A1.add('ans', 2)
 student_answers.append(test_case_5)
 
-test_case_7 = A1.add('ans', '2')
-student_answers.append(test_case_7)
-
-test_case_6 = A1.divide(14, 0)
+test_case_6 = A1.add('ans', '2')
 student_answers.append(test_case_6)
 
+test_case_7 = A1.divide(14, 0)
+student_answers.append(test_case_7)
+
+a = 2 # starting number 
+r = 3 # Common ratio 
+n = 5 # N th term to be find 
+
+gp = A1.printGP(a, r, n) 
+gp = list(gp) 
+student_answers.append(gp)
 
 print(actual_answers)
 print(student_answers)
