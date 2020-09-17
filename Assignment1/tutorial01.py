@@ -80,10 +80,17 @@ def printGP(a = nan, r = nan, n = nan):
 	try:
 		a = float(a)
 		r = float(r)
-		n = int(n)
+		n_new = int(n)
 	except ValueError:
 		return 0
+
 	gp = []
+
+	if(float(n) - n_new != 0):
+		return 0
+	else:
+		n = n_new
+
 	if(n < 0):
 		return 0
 	elif(n == 0):
@@ -107,5 +114,4 @@ def printAP(a = nan, d = nan, n = nan):
 def printHP(a = nan, d = nan, n = nan): 
 	hp=[]
 	return hp
-
 
