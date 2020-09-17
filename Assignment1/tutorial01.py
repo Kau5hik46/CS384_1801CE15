@@ -97,10 +97,8 @@ def printGP(a = nan, r = nan, n = nan):
 
 	gp = []
 
-	if(n % 1 == 0):
-		n = int(n)
-	else:
-		return 0
+	if(n % 1 == 0): n = int(n)
+	else: return 0
 
 	if(n < 0):
 		return 0
@@ -119,21 +117,39 @@ def printGP(a = nan, r = nan, n = nan):
 def printAP(a = nan, d = nan, n = nan): 
 	try:
 		a = float(a)
-		r = float(r)
-		n_new = int(n)
+		d = float(d)
+		n = float(n)
 	except ValueError:
 		return 0
 
-	if(float(n) - n_new != 0):
-		return 0
-	else:
-		n = n_new
+	if(n % 1 != 0): return 0
+	else: n = int(n)
 
-	ap=[]
+	ap = []
+
+	if(n < 0):
+		return 0
+	elif(n == 0):
+		return ap
+
+	ap.append(a)
+	for i in range(1,n):
+		ap.append(ap[i-1]+d)
 	return ap
 
 # Python 3 program to print HP.   Harmonic Progression
 #You cant use the inbuilt python function. Write your own function
 def printHP(a = nan, d = nan, n = nan): 
-	hp=[]
+	try:
+		a = float(a)
+		d = float(d)
+		n = float(n)
+	except ValueError:
+		return 0
+	if(a % d == 0):
+		return 0
+	hp=printAP(a,d,n);
+	if(hp == 0):
+		return hp
+	hp = [round(1/i, 3) for i in hp]
 	return hp
