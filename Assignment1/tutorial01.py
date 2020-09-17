@@ -71,8 +71,19 @@ def power(num1 = nan, num2 = nan): #num1 ^ num2
 		num1 = float(num1)
 		num2 = float(num2)
 	except ValueError:
-		return 0 
-	return power
+		return 0
+	if(num2 % 1 != 0): return 0
+	else: num2 = int(num2)
+
+	if(num2 < 0):
+		num2 = -num2;
+		num1 = 1/num1;
+	pwr = 1;
+	for i in range(0, num2):
+		pwr *= num1
+	pwr = round(pwr, 3)
+	return pwr
+	
 	
 # Python 3 program to print GP.  geometric Progression
 #You cant use the inbuilt python function. Write your own function
@@ -126,4 +137,3 @@ def printAP(a = nan, d = nan, n = nan):
 def printHP(a = nan, d = nan, n = nan): 
 	hp=[]
 	return hp
-
