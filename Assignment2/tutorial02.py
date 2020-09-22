@@ -10,6 +10,19 @@ def summation(first_list = []):
 
     return round(summation_value, 3)
 
+def sorting(first_list = []):
+    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
+
+    for i in range(0, len(first_list)):
+        min_index = i
+        for j in range(i+1, len(first_list)):
+            if(first_list[min_index] > first_list[j]):
+                min_index = j
+        first_list[i], first_list[min_index] = first_list[min_index], first_list[i]
+
+    sorted_list = first_list
+    return [round(num, 3) for num in sorted_list]
+
 
 # Function to compute mean
 def mean(first_list = []):
@@ -85,11 +98,6 @@ def skewness(first_list = []):
 
     return round(skewness_value, 3)
     
-def sorting(first_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
-
-    return [round(num, 3) for num in sorted_list]
-
 
 # Function to compute Kurtosis. You cant use Python functions
 def kurtosis(first_list = []):
