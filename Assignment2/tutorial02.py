@@ -4,6 +4,10 @@
 def summation(first_list = []):
     if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
 
+    mean_value = 0
+    for _ in first_list:
+        mean_value += _
+
     return round(summation_value, 3)
 
 
