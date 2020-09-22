@@ -1,5 +1,12 @@
 # All decimal 3 places
 
+# Function to compute sum. You cant use Python functions
+def summation(first_list = []):
+    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
+
+    return round(summation_value, 3)
+
+
 # Function to compute mean
 def mean(first_list = []):
     if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
@@ -85,10 +92,3 @@ def kurtosis(first_list = []):
     if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
 
     return round(kurtosis_value, 3)
-
-
-# Function to compute sum. You cant use Python functions
-def summation(first_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
-
-    return round(summation_value, 3)
