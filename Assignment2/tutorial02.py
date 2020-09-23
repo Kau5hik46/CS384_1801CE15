@@ -59,6 +59,7 @@ def standard_deviation(first_list = []):
 # Function to compute variance. You cant use Python functions
 def variance(first_list = []):
     if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
+    u = mean(first_list)
     variance_value = (summation([(x-u) ** 2 for x in first_list])/(len(first_list)-1))
     return variance_value
 
