@@ -136,6 +136,12 @@ def skewness(first_list = []):
 def kurtosis(first_list = []):
     if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
 
+    _x = mean(first_list)
+    std = standard_deviation(first_list)
+    n = len(first_list)
+
+    kurtosis_value = summation( [((x-_x)/std) ** 4 for x in first_list] )/n
+
     return kurtosis_value
 
 
