@@ -14,15 +14,14 @@ def summation(first_list = []):
 
 def sorting(first_list = []):
     if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
-
-    for i in range(0, len(first_list)):
+    sorted_list = first_list[:]
+    for i in range(0, len(sorted_list)):
         min_index = i
-        for j in range(i+1, len(first_list)):
-            if(first_list[min_index] > first_list[j]):
+        for j in range(i+1, len(sorted_list)):
+            if(sorted_list[min_index] > sorted_list[j]):
                 min_index = j
-        first_list[i], first_list[min_index] = first_list[min_index], first_list[i]
+        sorted_list[i], sorted_list[min_index] = sorted_list[min_index], sorted_list[i]
 
-    sorted_list = first_list
     return sorted_list
 
 
@@ -64,13 +63,31 @@ def variance(first_list = []):
     return variance_value
 
 # Function to compute mse. You cant use Python functions
-def mse(first_list = [], second_list = []):
-    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
-    if(not all(isinstance(x, (int, float)) for x in second_list)): return 0
-    if(len(first_list) != len(second_list)): return 0
+# def mse(first_list = [], second_list = []):
+#     if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
+#     if(not all(isinstance(x, (int, float)) for x in second_list)): return 0
+#     if(len(first_list) != len(second_list)): return 0
 
-    mse_value = summation([(x-y) ** 2 for x, y in zip(first_list, second_list)])/len(first_list)
+#     mse_value = summation([(x-y) ** 2 for x, y in zip(first_list, second_list)])/len(first_list)
 
+#     return mse_value
+
+def mse(first_list, second_list):
+    # mse Logic
+    summation_value = 0
+    if len(first_list) == len(second_list):
+        for i in range(len(first_list)):
+            if isinstance(first_list[i],(int,float)) and isinstance(second_list[i],(int,float)):
+                summation_value = summation_value + ((first_list[i]-second_list[i])**2)
+            else:
+                return 0
+    else:
+        return 0
+    mse_value = 0
+    if len(first_list)>0:
+        mse_value = summation_value/len(first_list)
+    else:
+        return 0
     return mse_value
 
 # Function to compute RMSE. You cant use Python functions
@@ -92,7 +109,6 @@ def mae(first_list = [], second_list = []):
     mae_value = summation([ abs(x-y) for x, y in zip(first_list, second_list)]) / len(first_list)
 
     return mae_value
-
 
 # Function to compute NSE. You cant use Python functions
 def nse(first_list = [], second_list = []):
