@@ -130,7 +130,7 @@ def skewness(first_list = []):
     std = standard_deviation(first_list)
     n = len(first_list)
 
-    skewness = summation( [((x-_x)/std) ** 3 for x in first_list] )/n
+    skewness_value = summation( [((x-_x)/std) ** 3 for x in first_list] )/n
 
     return skewness_value
     
