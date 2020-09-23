@@ -100,7 +100,7 @@ def nse(first_list = [], second_list = []):
     if(not any(isinstance(x, (int, float)) for x in second_list)): return 0
     if(len(first_list) != len(second_list)): return 0
 
-    nse_value = 1 - (mse(first_list, second_list) / (standard_deviation(first_list, second_list) ** 2))
+    nse_value = 1 - (mse(first_list, second_list) / (standard_deviation(first_list) ** 2))
 
     return nse_value
 
