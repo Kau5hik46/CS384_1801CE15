@@ -4,7 +4,7 @@ from math import sqrt
 
 # Function to compute sum. You cant use Python functions
 def summation(first_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
 
     summation_value = 0
     for _ in first_list:
@@ -13,7 +13,7 @@ def summation(first_list = []):
     return summation_value
 
 def sorting(first_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
 
     for i in range(0, len(first_list)):
         min_index = i
@@ -28,7 +28,7 @@ def sorting(first_list = []):
 
 # Function to compute mean
 def mean(first_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
 
     mean_value = summation(first_list)/len(first_list)
 
@@ -37,7 +37,7 @@ def mean(first_list = []):
 
 # Function to compute median. You cant use Python functions
 def median(first_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
     sorted_list = sorting(first_list)
     median_value = 0
     num_of_elems = len(sorted_list)
@@ -50,7 +50,7 @@ def median(first_list = []):
 
 # Function to compute Standard deviation. You cant use Python functions
 def standard_deviation(first_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
     u = mean(first_list)
     standard_deviation_value = sqrt((summation([(x-u) ** 2 for x in first_list]))/len(first_list))
     return standard_deviation_value
@@ -58,15 +58,15 @@ def standard_deviation(first_list = []):
 
 # Function to compute variance. You cant use Python functions
 def variance(first_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
     u = mean(first_list)
     variance_value = (summation([(x-u) ** 2 for x in first_list])/(len(first_list)-1))
     return variance_value
 
 # Function to compute mse. You cant use Python functions
 def mse(first_list = [], second_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
-    if(not any(isinstance(x, (int, float)) for x in second_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in second_list)): return 0
     if(len(first_list) != len(second_list)): return 0
 
     mse_value = summation([(x-y) ** 2 for x, y in zip(first_list, second_list)])/len(first_list)
@@ -75,8 +75,8 @@ def mse(first_list = [], second_list = []):
 
 # Function to compute RMSE. You cant use Python functions
 def rmse(first_list = [], second_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
-    if(not any(isinstance(x, (int, float)) for x in second_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in second_list)): return 0
     if(len(first_list) != len(second_list)): return 0
 
     rmse_value = sqrt(mse(first_list, second_list))
@@ -85,8 +85,8 @@ def rmse(first_list = [], second_list = []):
 
 # Function to compute mae. You cant use Python functions
 def mae(first_list = [], second_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
-    if(not any(isinstance(x, (int, float)) for x in second_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in second_list)): return 0
     if(len(first_list) != len(second_list)): return 0
 
     mae_value = summation([ abs(x-y) for x, y in zip(first_list, second_list)]) / len(first_list)
@@ -96,8 +96,8 @@ def mae(first_list = [], second_list = []):
 
 # Function to compute NSE. You cant use Python functions
 def nse(first_list = [], second_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
-    if(not any(isinstance(x, (int, float)) for x in second_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in second_list)): return 0
     if(len(first_list) != len(second_list)): return 0
 
     nse_value = 1 - (mse(first_list, second_list) / (standard_deviation(first_list) ** 2))
@@ -107,8 +107,8 @@ def nse(first_list = [], second_list = []):
 
 # Function to compute Pearson correlation coefficient. You cant use Python functions
 def pcc(first_list = [], second_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
-    if(not any(isinstance(x, (int, float)) for x in second_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in second_list)): return 0
     if(len(first_list) != len(second_list)): return 0
 
     _x = mean(first_list)
@@ -124,7 +124,7 @@ def pcc(first_list = [], second_list = []):
 
 # Function to compute Skewness. You cant use Python functions
 def skewness(first_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
 
     _x = mean(first_list)
     std = standard_deviation(first_list)
@@ -137,7 +137,7 @@ def skewness(first_list = []):
 
 # Function to compute Kurtosis. You cant use Python functions
 def kurtosis(first_list = []):
-    if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
+    if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
 
     _x = mean(first_list)
     std = standard_deviation(first_list)
