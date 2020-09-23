@@ -59,7 +59,7 @@ def standard_deviation(first_list = []):
 def variance(first_list = []):
     if(not all(isinstance(x, (int, float)) for x in first_list)): return 0
     u = mean(first_list)
-    variance_value = (summation([(x-u) ** 2 for x in first_list])/(len(first_list)-1))
+    variance_value = standard_deviation(first_list) ** 2
     return variance_value
 
 # Function to compute mse. You cant use Python functions
