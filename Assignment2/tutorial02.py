@@ -4,9 +4,9 @@
 def summation(first_list = []):
     if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
 
-    mean_value = 0
+    summation_value = 0
     for _ in first_list:
-        mean_value += _
+        summation_value += _
 
     return summation_value
 
