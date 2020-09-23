@@ -62,7 +62,7 @@ total_test_cases = len(actual_answers)
 count_of_correct_test_cases = 0
 
 for x, y in zip(actual_answers, student_answers):
-    if x == y:
+    if x == round(y, 2):
         count_of_correct_test_cases += 1
 
 print(f"Test Cases Passed = '{count_of_correct_test_cases}'  / '{total_test_cases}'")
