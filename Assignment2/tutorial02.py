@@ -74,6 +74,9 @@ def mse(first_list = [], second_list = []):
 def rmse(first_list = [], second_list = []):
     if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
     if(not any(isinstance(x, (int, float)) for x in second_list)): return 0
+    if(len(first_list) != len(second_list)): return 0
+
+    rmse_value = sqrt(mse(first_list, second_list))
 
     return rmse_value
 
