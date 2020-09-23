@@ -1,5 +1,7 @@
 # All decimal 3 places
 
+from math import sqrt
+
 # Function to compute sum. You cant use Python functions
 def summation(first_list = []):
     if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
