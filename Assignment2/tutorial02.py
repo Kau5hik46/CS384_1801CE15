@@ -110,7 +110,7 @@ def pcc(first_list = [], second_list = []):
 
     _x = mean(first_list)
     _y = mean(second_list)
-    
+
     numerator = summation([(x-_x)*(y-_y) for x, y in zip(first_list, second_list)])
     denominator = sqrt(summation([(x-_x) ** 2 for x in first_list])) * sqrt(summation([(y-_y) ** 2 for y in second_list]))
     
@@ -123,6 +123,12 @@ def pcc(first_list = [], second_list = []):
 def skewness(first_list = []):
     if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
 
+    _x = mean(first_list)
+    std = standard_deviation(first_list)
+    n = len(first_list)
+
+    skewness = summation( [((x-_x)/std) ** 3 for x in first_list] )/n
+
     return skewness_value
     
 
@@ -131,3 +137,7 @@ def kurtosis(first_list = []):
     if(not any(isinstance(x, (int, float)) for x in first_list)): return 0
 
     return kurtosis_value
+
+
+
+
