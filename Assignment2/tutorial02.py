@@ -89,7 +89,7 @@ def mae(first_list = [], second_list = []):
     if(not any(isinstance(x, (int, float)) for x in second_list)): return 0
     if(len(first_list) != len(second_list)): return 0
 
-    mae_value = [abs(x-y) for x, y in zip(first_list, second_list)] / len(first_list)
+    mae_value = summation([ abs(x-y) for x, y in zip(first_list, second_list)]) / len(first_list)
 
     return mae_value
 
