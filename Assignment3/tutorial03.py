@@ -213,6 +213,11 @@ def new_file_sort():
 		row.insert(2, last_name)
 		append_row(filename_1, row)
 
+	sorted_data = Sort(new_data)
+	filename_2 = "studentinfo_cs384_names_split_sorted_first_name.csv"
+	for row in sorted_data:
+		append_row(filename_2, row)
+
 
 course()
 country()
