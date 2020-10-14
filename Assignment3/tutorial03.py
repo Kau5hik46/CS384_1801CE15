@@ -191,10 +191,28 @@ def blood_group():
     return blood_groups
 
 
+def Sort(new_data): 
+	return(sorted(new_data, key = lambda x: x[1]))  
+
+
 # Create the new file here and also sort it in this function only.
 def new_file_sort():
-    # Read csv and process
-    pass
+	open_dir(root_folder)
+	new_data = [list(x.values()) for x in raw_data]
+	del headers[1]
+	headers.insert(1, "first_name")
+	headers.insert(2, "last_name")
+	filename_1 = "studentinfo_cs384_names_split.csv"
+	for row in new_data:
+		full_name = row[1]
+		names = full_name.split(" ", 1)
+		first_name = names[0]
+		last_name = names[1]
+		del row[1]
+		row.insert(1, first_name)
+		row.insert(2, last_name)
+		append_row(filename_1, row)
+
 
 course()
 country()
@@ -203,4 +221,5 @@ gender()
 dob()
 blood_group()
 state()
+new_file_sort()
 
