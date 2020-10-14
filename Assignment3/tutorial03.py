@@ -140,8 +140,27 @@ def gender():
 
 
 def dob():
-    # Read csv and process
-    pass
+    open_dir(root_folder)
+    open_dir("dob", pwd())
+    dobs = [1995,2000,2005,2010,2015]
+
+    for row in raw_data:
+    	dob = row[headers[5]]
+    	year = int(dob[-4:])
+    	if(year == 2020):
+    		year = 2015
+    	try:
+    		year = dobs[((year%1995)//5)]
+    		if(year != 2015):
+    			filename = "bday_" + str(year) + "_" + str(year+4) + ".csv"
+    		else:
+    			filename = "bday_" + str(year) + "_" + str(year+5) + ".csv"
+    	except:
+    		filename = "misc.csv" 
+    	
+    	append_row(filename, row.values())
+
+    return dobs
 
 
 def state():
@@ -163,5 +182,5 @@ course()
 country()
 email_domain_extract()
 gender()
-
+dob()
 
