@@ -126,8 +126,17 @@ def email_domain_extract():
     return domains
 
 def gender():
-    # Read csv and process
-    pass
+    open_dir(root_folder)
+    open_dir("gender", pwd())
+    genders = set()
+
+    for row in raw_data:
+    	gender = row[headers[4]]
+    	genders.add(gender)
+    	filename = str(gender).lower() + ".csv"
+    	append_row(filename, row.values())
+
+    return genders
 
 
 def dob():
@@ -153,5 +162,6 @@ def new_file_sort():
 course()
 country()
 email_domain_extract()
+gender()
 
 
