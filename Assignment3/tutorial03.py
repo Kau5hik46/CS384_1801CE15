@@ -14,7 +14,7 @@ def open_dir(directory = ".", pwd = pwd()):
 		os.mkdir(os.path.join(pwd, str(directory)))
 		os.chdir(directory)
 
-	print(os.getcwd())
+	# print(os.getcwd())
 	return None
 
 def del_directory(directory = ".", pwd = pwd()):
@@ -110,9 +110,20 @@ def country():
 	return countries
 
 def email_domain_extract():
-    # Read csv and process
-    pass
+    open_dir(root_folder)
+    open_dir("email_domain", pwd())
+    domains = set()
+    for row in raw_data:
+    	email = row[headers[3]]
+    	start_pos = email.find('@')
+    	start_pos += 1
+    	end_pos = email.find('.')
+    	domain = email[start_pos:end_pos]
+    	domains.add(domain)
+    	filename = str(domain).lower() + ".csv"
+    	append_row(filename, row.values())
 
+    return domains
 
 def gender():
     # Read csv and process
@@ -141,5 +152,6 @@ def new_file_sort():
 
 course()
 country()
+email_domain_extract()
 
 
