@@ -2,6 +2,31 @@ import csv
 import os
 from os import system as terminal
 
+pwd = os.getcwd
+
+def open_dir(directory = ".", pwd = pwd()):
+	if(directory == "."):
+		return
+
+	try:
+		os.chdir(directory)
+	except:
+		os.mkdir(os.path.join(pwd, str(directory)))
+		os.chdir(directory)
+
+	print(os.getcwd())
+	return None
+
+def del_directory(directory = ".", pwd = pwd()):
+	for root, dirs, files in os.walk(directory, topdown=False):
+		if(directory == '/'):
+			print("Dangerous. Stopping right away!")
+			return None
+		for name in files:
+			os.remove(os.path.join(root, name))
+		for name in dirs:
+			os.rmdir(os.path.join(root, name))
+
 # Imported necessary modules captured data from input_file
 input_file_path = 'studentinfo_cs384.csv'
 
@@ -14,20 +39,10 @@ with open(input_file_path, 'r') as input_file:
 	for row in reader:
 		raw_data.append(row)
 
-pwd = os.getcwd()
+del_directory("analytics")
+open_dir("analytics")
 
-def open_dir(directory = ".", pwd = os.getcwd()):
-	if(directory == "."):
-		return
-
-	try:
-		os.chdir(directory)
-	except:
-		os.mkdir(os.path.join(pwd, str(directory)))
-		os.chdir(directory)
-
-	print(os.getcwd())
-	return None
+root_folder = pwd()
 
 def get_ydc(row):
 	student_id = row[headers[0]]
@@ -55,8 +70,8 @@ def append_row(filename, list_of_elems):
 
 
 def course():
-	open_dir("analytics")
-	open_dir("course")
+	open_dir(root_folder)
+	open_dir("course", pwd())
 	course_dir = os.getcwd()
 
 	courses = set()
@@ -79,12 +94,20 @@ def course():
    		append_row(filename, row.values())
    		open_dir(course_dir)
 
+	return(courses, years, degrees)
 
 
 def country():
-    # Read csv and process
-    pass
+	open_dir(root_folder)
+	open_dir("country", pwd())
+	countries = set()
+	for row in raw_data:
+		country = row[headers[2]]
+		countries.add(country)
+		filename = str(country).lower() + ".csv"
+		append_row(filename, row.values())
 
+	return countries
 
 def email_domain_extract():
     # Read csv and process
@@ -117,4 +140,6 @@ def new_file_sort():
     pass
 
 course()
+country()
+
 
