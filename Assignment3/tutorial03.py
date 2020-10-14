@@ -164,8 +164,17 @@ def dob():
 
 
 def state():
-    # Read csv and process
-    pass
+    open_dir(root_folder)
+    open_dir("state", pwd())
+    states = set()
+
+    for row in raw_data:
+    	state = row[headers[7]]
+    	states.add(state)
+    	filename = str(state).lower() + ".csv"
+    	append_row(filename, row.values())
+
+    return states
 
 
 def blood_group():
@@ -193,4 +202,5 @@ email_domain_extract()
 gender()
 dob()
 blood_group()
+state()
 
