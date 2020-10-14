@@ -169,8 +169,17 @@ def state():
 
 
 def blood_group():
-    # Read csv and process
-    pass
+    open_dir(root_folder)
+    open_dir("blood_group", pwd())
+    blood_groups = set()
+
+    for row in raw_data:
+    	blood_group = row[headers[6]]
+    	blood_groups.add(blood_group)
+    	filename = str(blood_group).lower() + ".csv"
+    	append_row(filename, row.values())
+
+    return blood_groups
 
 
 # Create the new file here and also sort it in this function only.
@@ -183,4 +192,5 @@ country()
 email_domain_extract()
 gender()
 dob()
+blood_group()
 
