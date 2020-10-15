@@ -17,7 +17,7 @@ def open_dir(directory = ".", pwd = pwd()):
 	# print(os.getcwd())
 	return None
 
-def del_directory(directory = ".", pwd = pwd()):
+def del_create_analytics_folder(directory = "analytics", pwd = pwd()):
 	for root, dirs, files in os.walk(directory, topdown=False):
 		if(directory == '/'):
 			print("Dangerous. Stopping right away!")
@@ -39,7 +39,7 @@ with open(input_file_path, 'r') as input_file:
 	for row in reader:
 		raw_data.append(row)
 
-del_directory("analytics")
+del_create_analytics_folder()
 open_dir("analytics")
 
 root_folder = pwd()
@@ -217,14 +217,4 @@ def new_file_sort():
 	filename_2 = "studentinfo_cs384_names_split_sorted_first_name.csv"
 	for row in sorted_data:
 		append_row(filename_2, row)
-
-
-course()
-country()
-email_domain_extract()
-gender()
-dob()
-blood_group()
-state()
-new_file_sort()
 
