@@ -18,7 +18,19 @@ def open_dir(directory = ".", cwd = pwd()):
 
 root_folder = open_dir("Subtitles") #Setting this as the root folder for further reference
 
+
+# Padding function
+def padding(original = '', padding_length = 0):
+	padded = str(original)
+	padded = padded.lstrip('0')
+	while len(padded) < padding_length:
+		padded = '0' + padded
+
+	return padded
+
+
 def rename_FIR(folder_name = "FIR"):
+	open_dir(root_folder)
 	open_dir(folder_name)
 	Subtitles = os.listdir(pwd())
 	for subtitle in Subtitles:
