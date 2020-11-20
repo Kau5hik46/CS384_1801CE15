@@ -22,6 +22,7 @@ root_folder = open_dir("Subtitles") #Setting this as the root folder for further
 # Padding function
 def padding(original = '', padding_length = 0):
 	padded = str(original)
+	padded = padded.strip()
 	padded = padded.lstrip('0')
 	while len(padded) < padding_length:
 		padded = '0' + padded
@@ -46,8 +47,35 @@ def rename_FIR(folder_name = "FIR"):
 	return 
 
 def rename_Game_of_Thrones(folder_name = "Game of Thrones"):
-	pass
-
+	open_dir(root_folder)
+	open_dir(folder_name)
+	Subtitles = os.listdir(pwd())
+	for subtitle in Subtitles:
+		try:
+			extracted = re.split('-',subtitle)
+			season_x_episode = extracted[1]
+			remaining = re.split(r'\.',extracted[2])
+			season_number , episode_number = re.split('x',season_x_episode)
+			episode_name = remaining[0]
+			file_extension = (re.split(r'\.',extracted[2])[-1]).strip()
+			episode_number = padding(episode_number, padding_episode)
+			season_number = padding(season_number, padding_season)
+			new_name = 'Game of Thrones - Season '+ season_number + ' Episode ' + episode_number+ ' - ' + episode_name + '.' + file_extension
+			os.rename(subtitle, new_name)
+		except:
+			try:
+				extracted = re.split('-',subtitle)
+				extracted = [x.strip() for x in extracted]
+				season_number = (extracted[1].split())[1]
+				season_number = padding(season_number, padding_season)
+				episode_number = (extracted[1].strip()).split()[3]
+				episode_number = padding(episode_number, padding_episode)
+				file_extension = extracted[2].split(r'.')[-1]
+				episode_name = extracted[2].split(r'.')[0]
+				new_name = 'Game of Thrones - Season '+ season_number + ' Episode ' + episode_number+ ' - ' + episode_name + '.' + file_extension
+				os.rename(subtitle, new_name)
+			except:
+				print(subtitle + " doesn't corespond to the normal subtitle naming convention")
 
 def rename_Sherlock(folder_name = "Sherlock"):
 	pass
