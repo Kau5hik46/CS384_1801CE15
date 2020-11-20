@@ -29,6 +29,17 @@ def padding(original = '', padding_length = 0):
 
 	return padded
 
+def newname_check(subtitle):
+	extracted = re.split('-',subtitle)
+	extracted = [x.strip() for x in extracted]
+	season_number = (extracted[1].split())[1]
+	season_number = padding(season_number, padding_season)
+	episode_number = (extracted[1].strip()).split()[3]
+	episode_number = padding(episode_number, padding_episode)
+	file_extension = extracted[2].split(r'.')[-1]
+	episode_name = extracted[2].split(r'.')[0]
+	return episode_number, season_number,  file_extension
+
 
 def rename_FIR(folder_name = "FIR"):
 	open_dir(root_folder)
@@ -64,21 +75,36 @@ def rename_Game_of_Thrones(folder_name = "Game of Thrones"):
 			os.rename(subtitle, new_name)
 		except:
 			try:
-				extracted = re.split('-',subtitle)
-				extracted = [x.strip() for x in extracted]
-				season_number = (extracted[1].split())[1]
-				season_number = padding(season_number, padding_season)
-				episode_number = (extracted[1].strip()).split()[3]
-				episode_number = padding(episode_number, padding_episode)
-				file_extension = extracted[2].split(r'.')[-1]
-				episode_name = extracted[2].split(r'.')[0]
+				season_number, episode_number, file_extension = newname_check(subtitle)
 				new_name = 'Game of Thrones - Season '+ season_number + ' Episode ' + episode_number+ ' - ' + episode_name + '.' + file_extension
-				os.rename(subtitle, new_name)
+				if(new_name != subtitle):
+					os.rename(subtitle, new_name)
 			except:
 				print(subtitle + " doesn't corespond to the normal subtitle naming convention")
 
 def rename_Sherlock(folder_name = "Sherlock"):
-	pass
+	open_dir(root_folder)
+	open_dir(folder_name)
+	Subtitles = os.listdir(pwd())
+	for subtitle in Subtitles:
+		try:
+			extracted = re.findall(r'\d+',subtitle)
+			extracted = [x.strip() for x in extracted]
+			season_number = extracted[0]
+			episode_number = extracted[1]
+			file_extension = (re.split(r'\.',subtitle)[-1]).strip()
+			episode_number = padding(episode_number, padding_episode)
+			season_number = padding(season_number, padding_season)
+			new_name = 'Sherlock - Season '+ season_number + ' Episode ' + episode_number+ '.' + file_extension
+			os.rename(subtitle, new_name)
+		except:
+			try:
+				season_number, episode_number, file_extension = newname_check(subtitle)
+				new_name = 'Sherlock - Season '+ season_number + ' Episode ' + episode_number+ '.' + file_extension
+				if(new_name != subtitle):
+					os.rename(subtitle, new_name)
+			except:
+				print(subtitle + " doesn't corespond to the normal subtitle naming convention")
 
 def rename_Suits(folder_name = "Suits"):
 	pass
