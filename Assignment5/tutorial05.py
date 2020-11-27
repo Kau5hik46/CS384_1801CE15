@@ -30,6 +30,7 @@ def padding(original = '', padding_length = 0):
 	return padded
 
 def newname_check(subtitle):
+	print("Checking for new naming convention")
 	extracted = re.split('-',subtitle)
 	extracted = [x.strip() for x in extracted]
 	season_number = (extracted[1].split())[1]
@@ -58,6 +59,7 @@ def rename_FIR(folder_name = "FIR"):
 			os.rename(subtitle, new_name)
 		except:
 			print(subtitle + " doesn't corespond to the normal subtitle naming convention")
+			os.rename(subtitle, subtitle)
 	return 
 
 def rename_Game_of_Thrones(folder_name = "Game of Thrones"):
@@ -84,6 +86,7 @@ def rename_Game_of_Thrones(folder_name = "Game of Thrones"):
 					os.rename(subtitle, new_name)
 			except:
 				print(subtitle + " doesn't corespond to the normal subtitle naming convention")
+				os.rename(subtitle, subtitle)
 
 def rename_Sherlock(folder_name = "Sherlock"):
 	open_dir(root_folder)
@@ -108,6 +111,7 @@ def rename_Sherlock(folder_name = "Sherlock"):
 					os.rename(subtitle, new_name)
 			except:
 				print(subtitle + " doesn't corespond to the normal subtitle naming convention")
+				os.rename(subtitle, subtitle)
 
 def rename_Suits(folder_name = "Suits"):
 	open_dir(root_folder)
@@ -134,9 +138,33 @@ def rename_Suits(folder_name = "Suits"):
 					os.rename(subtitle, new_name)
 			except:
 				print(subtitle + " doesn't corespond to the normal subtitle naming convention")
+				os.rename(subtitle, subtitle)
 
 def rename_How_I_Met_Your_Mother(folder_name = "How I Met Your Mother"):
-	pass
+	open_dir(root_folder)
+	open_dir(folder_name)
+	Subtitles = os.listdir(pwd())
+	for subtitle in Subtitles:
+		try:
+			extracted = re.findall(r'\d+',subtitle)
+			episode_number = (extracted[1]).strip()
+			season_number = (extracted[0]).strip()
+			extracted = re.split('-',subtitle)
+			episode_name = (re.split(r'\.',extracted[2])[0]).strip()
+			file_extension = (re.split(r'\.',subtitle)[-1]).strip()
+			episode_number = padding(episode_number, padding_episode)
+			season_number = padding(season_number, padding_season)
+			new_name = 'How I Met Your Mother - Season '+ season_number + ' Episode ' + episode_number + ' - ' + episode_name + '.' + file_extension
+			os.rename(subtitle, new_name) 
+		except:
+			try:
+				episode_number, season_number, episode_name, file_extension = newname_check(subtitle)
+				new_name = 'How I Met Your Mother - Season '+ season_number + ' Episode ' + episode_number + ' - ' + episode_name + '.' + file_extension
+				if(new_name != subtitle):
+					os.rename(subtitle, new_name)
+			except:
+				print(subtitle + " doesn't corespond to the normal subtitle naming convention")
+				os.rename(subtitle, subtitle)
 
 # Driver Code
 
@@ -164,6 +192,8 @@ def rename(option = 0):
 		rename_Sherlock()
 	elif option	== series["Suits"]:
 		rename_Suits()
+	elif option == series["How I Met Your Mother"]:
+		rename_How_I_Met_Your_Mother()
 	else:
 		rename(series[prompt()])
 
