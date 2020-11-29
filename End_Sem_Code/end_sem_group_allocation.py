@@ -152,7 +152,7 @@ def make_groups(number_of_groups, branch_groups, branch_strength, total_strength
 
 def group_allocation(filename, number_of_groups):
 	raw_data = Group("raw_data", input_file = filename)
-	branch_strength = Group("branch_strength", headers = ["BRANCH CODE", "STRENGTH"])
+	branch_strength = Group("branch_strength", headers = ["BRANCH_CODE", "STRENGTH"])
 	branch_groups = []
 	for branch in raw_data.branches:
 		data = []
