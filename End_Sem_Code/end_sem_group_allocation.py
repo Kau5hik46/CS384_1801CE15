@@ -1,6 +1,7 @@
 import math
 import os
 import csv
+import copy
 from os import system as terminal
 import time
 
@@ -117,16 +118,20 @@ def make_groups(number_of_groups, branch_groups, branch_strength, total_strength
 
 	strengths = [x[1] for x in strengths]
 
+	branch_groups = sorted(branch_groups, key = lambda x : x.group_name, reverse = False)
+	branch_groups = sorted(branch_groups, key = lambda x : x.strength, reverse = True)
+
 	cummulative_strength = [sum(strengths[0:x:1]) for x in range(0, len(strengths)+1)]
 	cummulative_strength = cummulative_strength[1:]
+
+	header = ["group", "total"] + [x[0] for x in branch_strength.group_list]
+
 	j = 0
 	for i in range(0, sum(strengths)):
 		if(i >= cummulative_strength[j]):
 			j += 1
 		strengths[j] -= 1
 		groups[i%number_of_groups].strengths[j] += 1
-
-	header = ["group", "total"] + [x[0] for x in branch_strength.group_list]
 
 	stats = Group("stats_grouping", headers = header)
 	for g in groups:
@@ -135,7 +140,6 @@ def make_groups(number_of_groups, branch_groups, branch_strength, total_strength
 		i = 0
 		while i < len(strengths) and g.strengths[i] >= 0:
 			g.group_list.append(branch_groups[i].group_list.pop(0))
-
 			g.strengths[i] -= 1
 			if(g.strengths[i] == 0):
 				i += 1
@@ -147,24 +151,27 @@ def make_groups(number_of_groups, branch_groups, branch_strength, total_strength
 
 
 def group_allocation(filename, number_of_groups):
-    raw_data = Group("raw_data", input_file = filename)
-    branch_strength = Group("branch strength", headers = ["BRANCH CODE", "STRENGTH"])
-    branch_groups = []
-    for branch in raw_data.branches:
-    	data = []
-    	for row in raw_data.group_list:
-    		if raw_data.get_branch(row = row) == branch:
-    			data.append(row)
-    	individual = Group(branch)
-    	individual.setdata(data)
-    	individual.make_csv()
-    	branch_groups.append(individual)
-    	branch_strength.group_list.append([branch, len(data)])
+	raw_data = Group("raw_data", input_file = filename)
+	branch_strength = Group("branch_strength", headers = ["BRANCH CODE", "STRENGTH"])
+	branch_groups = []
+	for branch in raw_data.branches:
+		data = []
+		for row in raw_data.group_list:
+			if raw_data.get_branch(row = row) == branch:
+				data.append(row)
+		individual = Group(branch)
+		individual.setdata(data)
+		individual.strength = len(data)
+		individual.make_csv()
+		branch_groups.append(individual)
+		branch_strength.group_list.append([branch, len(data)])
 
-    make_groups(number_of_groups, branch_groups, branch_strength, len(raw_data.group_list))
-    branch_strength.sort(key_index = 0)
-    branch_strength.sort(key_index = 1, reverse = True)
-    branch_strength.make_csv()
+	branch_strength.sort(key_index = 0)
+	branch_strength.sort(key_index = 1, reverse = True)
+	make_groups(number_of_groups, branch_groups, branch_strength, len(raw_data.group_list))
+	branch_strength.sort(key_index = 0)
+	branch_strength.sort(key_index = 1, reverse = True)
+	branch_strength.make_csv()
 
 
 
