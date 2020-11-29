@@ -46,6 +46,7 @@ class Group():
 		self.branches = set([])
 		if input_file != '':
 			self.read_from_file(input_file)
+			self.sort(key_index = 0)
 
 	def setdata(self, data):
 		setattr(self, "group_list", data)
@@ -117,7 +118,6 @@ def make_groups(number_of_groups, branch_groups, branch_strength, total_strength
 		groups[i-1].strengths = [x[0] for x in strengths]
 
 	strengths = [x[1] for x in strengths]
-
 	branch_groups = sorted(branch_groups, key = lambda x : x.group_name, reverse = False)
 	branch_groups = sorted(branch_groups, key = lambda x : x.strength, reverse = True)
 
@@ -130,16 +130,20 @@ def make_groups(number_of_groups, branch_groups, branch_strength, total_strength
 	for i in range(0, sum(strengths)):
 		if(i >= cummulative_strength[j]):
 			j += 1
+		if(strengths[j] == 0):
+			j += 1
 		strengths[j] -= 1
 		groups[i%number_of_groups].strengths[j] += 1
 
+	
 	stats = Group("stats_grouping", headers = header)
 	for g in groups:
 		temp = [g.output_filename] + [sum(g.strengths)] + g.strengths
 		stats.group_list.append(temp)
 		i = 0
-		while i < len(strengths) and g.strengths[i] >= 0:
-			g.group_list.append(branch_groups[i].group_list.pop(0))
+		while i < len(strengths) and g.strengths[i] > 0:
+			temp = branch_groups[i].group_list.pop(0)
+			g.group_list.append(temp)
 			g.strengths[i] -= 1
 			if(g.strengths[i] == 0):
 				i += 1
@@ -168,10 +172,9 @@ def group_allocation(filename, number_of_groups):
 
 	branch_strength.sort(key_index = 0)
 	branch_strength.sort(key_index = 1, reverse = True)
-	make_groups(number_of_groups, branch_groups, branch_strength, len(raw_data.group_list))
-	branch_strength.sort(key_index = 0)
-	branch_strength.sort(key_index = 1, reverse = True)
 	branch_strength.make_csv()
+	make_groups(number_of_groups, branch_groups, branch_strength, len(raw_data.group_list))
+	
 
 
 
@@ -180,5 +183,5 @@ del_folder()
 
 root_folder = pwd()
 
-number_of_groups = 12 
+number_of_groups = 12
 group_allocation(filename, number_of_groups)
