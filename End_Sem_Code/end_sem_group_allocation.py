@@ -2,7 +2,7 @@ import math
 import os
 import csv
 from os import system as terminal
-
+import time
 
 pwd = os.getcwd
 
@@ -170,16 +170,8 @@ def group_allocation(filename, number_of_groups):
 
 filename = "Btech_2020_master_data.csv"
 del_folder()
-headers = []
-raw_data = []
 
 root_folder = pwd()
-
-with open(filename, 'r') as input_file:
-	reader = csv.DictReader(input_file)
-	headers = reader.fieldnames
-	for row in reader:
-		raw_data.append(row)
 
 number_of_groups = 12 
 group_allocation(filename, number_of_groups)
