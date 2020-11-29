@@ -130,7 +130,7 @@ def make_groups(number_of_groups, branch_groups, branch_strength, total_strength
 	for i in range(0, sum(strengths)):
 		if(i >= cummulative_strength[j]):
 			j += 1
-		if(strengths[j] == 0):
+		while strengths[j] == 0:
 			j += 1
 		strengths[j] -= 1
 		groups[i%number_of_groups].strengths[j] += 1
@@ -149,12 +149,13 @@ def make_groups(number_of_groups, branch_groups, branch_strength, total_strength
 				i += 1
 		g.sort(key_index = 0)
 		g.make_csv()
-
 	stats.make_csv()
 
-
-
 def group_allocation(filename, number_of_groups):
+	if(number_of_groups < 0):
+		number_of_groups = - number_of_groups
+	if(number_of_groups == 0):
+		number_of_groups = 1
 	raw_data = Group("raw_data", input_file = filename)
 	branch_strength = Group("branch_strength", headers = ["BRANCH_CODE", "STRENGTH"])
 	branch_groups = []
@@ -174,9 +175,6 @@ def group_allocation(filename, number_of_groups):
 	branch_strength.sort(key_index = 1, reverse = True)
 	branch_strength.make_csv()
 	make_groups(number_of_groups, branch_groups, branch_strength, len(raw_data.group_list))
-	
-
-
 
 filename = "Btech_2020_master_data.csv"
 del_folder()
