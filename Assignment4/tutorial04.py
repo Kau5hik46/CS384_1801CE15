@@ -182,47 +182,6 @@ def overall(rollnumber):
 			overall_data[4] += total_semester_credits
 			overall_data[5] += total_semester_credits_cleared
 		append_row(filename, header, overall_data, individual = False)
-			
-
-	# spi_list = []
-	# semester_credits = []
-	# new_header = ["Semester", "Semester Credits", "Semester Credits Cleared", "Total Credits", "Total Credits Cleared", "CPI"]
-
-	# for row in ind_data:
-	# 	course_semester.append(int(row[4]))
-	# 	for i in range(1,9):
-	# 		if course_semester[-1] == i:
-	# 			course_credits.append(int(row[1]))
-	# 			course_grade.append(int(row[3]))
-				
-
-
-	
-			# course_credits.append(int(row[1]))
-			# gr = grade(str(row[3]))
-			# grades.append(gr)
-			# if(gr > 0):
-			# 	credits_cleared.append(int(row[1]))
-		
-
-			# SPI, Total_credits_cleared = spi(grades, course_credits)
-			# spi_list.append(SPI)
-			# credits.append(Total_credits_cleared)
-			# CPI = cpi(spi_list, Total_credits_cleared)
-			# roll_head = "Roll: "+ str(rollnumber)
-			# headers = ["Semester", "Semester Credits", "Semester Credits Cleared", "Total Credits", "Total Credits Cleared", "CPI"]
-			# Total_credits = 0
-			# for i in credits:
-			# 	Total_credits+=i 
-			# Total_credits_cleared = 0
-			# for i in credits_cleared:
-			# 		Total_credits_cleared+=i
-			# file_name = str(rollnumber) + "_" + "overall.csv"
-			# if(credits_cleared == []):
-			# 	credits_cleared.append(0)
-			# data = (Semester, course_credits[-1], credits_cleared[-1], Total_credits, Total_credits_cleared, CPI)
-			# data = list(data)
-			# append_row(file_name, headers, data)
 		 
 
 for row in raw_data:
