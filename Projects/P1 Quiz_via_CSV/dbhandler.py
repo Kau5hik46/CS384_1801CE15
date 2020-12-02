@@ -45,7 +45,7 @@ class dbhandler():
 
 	def select(self, table_name, select_val, select_by = 'ROLL'):
 		index = self.index_list
-		select_val.strip("'")
+		select_val = select_val.strip("'")
 		select_val = "'" +select_val + "'"
 		index = ','.join(index)
 		scrpit = "SELECT "+ str(index) + " FROM "  + str(table_name) + " where " + str(select_by) + " = " + str(select_val)
@@ -55,15 +55,11 @@ class dbhandler():
 	def update(self, table_name, column, new_value, select_val, select_by = 'ROLL'):
 		if select_by not in self.index_list:
 			return None
-		scrpit = "UPDATE "+str(table_name)+" set "+str(column)+" = " + str(new_value) + " where " + str(select_by) + " = " + str(select_val)
-		conn.execute(scrpit)
-		conn.commit()
-		return self.select(table_name, new_value, select_by)
-
-if __name__ == '__main__':
-	db = dbhandler("test.db", "project1_registration")
-	index_tuples = [("NAME", "TEXT", "NOT NULL"), ("ROLL","TEXT", "PRIMARY KEY","NOT NULL"), ("PASSWORD", "CHAR(64)", "NOT NULL"), ("WHATSAPP", "VARCHAR(12)", "NOT NULL")]
-	db.create_table("project1_registration", index_tuples)
-	print(db.insert("project1_registration", ["'KAUSHIK'", "'1801CE15'", "'ABCD'", "'9542687186'"]))
-	print(db.select("project1_registration", "'1801CE15'"))
-	db.connection.close()
+		new_value.strip("'")
+		new_value = "'" + str(new_value) + "'"
+		select_val.strip("'")
+		select_val = "'" + str(select_val) + "'"
+		scrpit = "UPDATE "+str(table_name)+" set "+str(column)+" = " + new_value + " where " + str(select_by) + " = " + str(select_val)
+		self.connection.execute(scrpit)
+		self.connection.commit()
+		return self.select(table_name, select_val, select_by)
