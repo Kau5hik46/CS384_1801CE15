@@ -8,5 +8,4 @@ folder_questions = "quiz_wise_questions"
 folder_responses = "quiz_wise_responses"
 folder_individual = "individual_responses"
 
-quiz = csvhandler()
 

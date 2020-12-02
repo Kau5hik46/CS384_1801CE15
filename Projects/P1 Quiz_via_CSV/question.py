@@ -1,3 +1,5 @@
+from time import time as current
+
 class Question():
 	def __init__(self, number, q, options, correct, marks, comp = 'n'):
 		self.qnum = number
@@ -47,3 +49,16 @@ class Question():
 			self.obtained_marks = self.marks[1]
 
 		return self.obtained_marks
+
+	def increment(self):
+		self.start = current()
+		time.sleep(1)
+		self.end = current()
+		return (self.end-self.start)//1
+
+	def timer(self, total_minutes):
+		time_remaining  = total_minutes * 60
+		while time_remaining > 0:
+			print(time_remaining // 60, end = ':')
+			print(time_remaining % 60)
+
