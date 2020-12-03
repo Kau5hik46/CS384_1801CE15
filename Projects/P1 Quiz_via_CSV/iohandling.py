@@ -1,3 +1,9 @@
+from os import getcwd
+import os
+import csv
+terminal = os.system
+pwd = getcwd
+
 def open_dir(directory = ".", pwd = pwd()):
 	if(directory == "."):
 		return
@@ -7,9 +13,9 @@ def open_dir(directory = ".", pwd = pwd()):
 		os.mkdir(os.path.join(pwd, str(directory)))
 		os.chdir(directory)
 
-	return pwd()
+	return getcwd()
 
-def del_folder(directory = None, file = None, pwd = pwd()):
+def delete(directory = None, file = None, pwd = pwd()):
 	if file is None:
 		for root, dirs, files in os.walk(directory, topdown=False):
 			if(directory == '/'):
@@ -30,10 +36,10 @@ class csvhandler():
 		self.input_file = filename
 		self.output_file = None
 		self.input_data = []
-		self.output_data
+		self.output_data = []
 
 	def read_from_file(self):
-		with open(filename, 'r') as input_file:
+		with open(self.input_file, 'r') as input_file:
 			reader = csv.DictReader(input_file)
 			self.headers = reader.fieldnames
 			for row in reader:
@@ -53,6 +59,7 @@ class csvhandler():
 				writer.writerow(headers)
 				writer.writerow(list_of_elems)
 
-	def make_csv(self):
+	def make_csv(self, filename):
+		self.output_file = filename
 		for row in self.output_data:
 			append_row(row)

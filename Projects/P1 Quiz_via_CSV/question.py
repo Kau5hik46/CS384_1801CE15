@@ -1,4 +1,7 @@
-from time import time as current
+import time
+from os import system as terminal
+import multiprocessing as mp
+current = time.time
 
 class Question():
 	def __init__(self, number, q, options, correct, marks, comp = 'n'):
@@ -25,6 +28,7 @@ class Question():
 		i = 1
 		for opt in self.options:
 			print("Option ", i, ") ", opt)
+			i += 1
 		print()
 		print("Credits if correct option: ", self.marks[0])
 		print("Negative Marking: ", self.marks[1])
@@ -50,15 +54,34 @@ class Question():
 
 		return self.obtained_marks
 
-	def increment(self):
-		self.start = current()
+	def decrement(self):
 		time.sleep(1)
-		self.end = current()
-		return (self.end-self.start)//1
+		self.time_remaining -= 1
 
 	def timer(self, total_minutes):
-		time_remaining  = total_minutes * 60
-		while time_remaining > 0:
-			print(time_remaining // 60, end = ':')
-			print(time_remaining % 60)
+		self.time_remaining  = total_minutes * 60
+		while self.time_remaining > 0:
+			self.decrement()
+			terminal("clear")
+			minutes = self.time_remaining // 60
+			seconds = self.time_remaining % 60
+			print(minutes, end = ':')
+			print(seconds)
+		return minutes, seconds
 
+def total_marks(current_marks, obtained_marks):
+	return current_marks + obtained_marks
+
+def quiz(raw_data):
+	quiz_questions = []
+	for quest in raw_data.input_data:
+		quest.pop(-1)
+		number = quest[0]
+		q = quest[1]
+		options = quest[2:6]
+		correct = quest[6]
+		marks = tuple(quest[7:9])
+		comp = quest[-1]
+		question = Question(number, q, options, correct, marks, comp)
+		quiz_questions.append(question)
+		return quiz_questions
