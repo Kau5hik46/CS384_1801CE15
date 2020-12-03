@@ -1,6 +1,7 @@
 import time
+import tkinter as tk
+from functools import partial
 from os import system as terminal
-import multiprocessing as mp
 current = time.time
 
 class Question():
@@ -35,6 +36,41 @@ class Question():
 		print("Is compulsory: ", self.compulsory)
 		self.marking()
 
+	def display_question_gui(self, main_window, background_color,del_label):
+		label_question = tk.Label(
+			main_window,
+			text = self.question,
+			font = ("helvetica", 20),
+			background = background_color,
+			width = 500,
+			justify = "center",
+			wraplength = 400)
+
+		buttons_options = []
+
+		for opt in self.options:
+			option = tk.Button(
+				main_window,
+				text = opt,
+				bg = "#541388",
+				activebackground = "#2e294e",
+				font = ("helvetica", 14),
+				justify = "left",
+				command = partial(self.marking_gui, opt, del_label))
+			buttons_options.append(option)
+
+		skip_option = tk.Button(
+			main_window,
+			text = "Skip this question",
+			font = ("helvetica", 14),
+			bg = "#541388",
+			activebackground = "#d90368",
+			justify = "left",
+			command = partial(self.marking_gui, "Skip this question", del_label))
+		buttons_options.append(skip_option)
+
+		return label_question, buttons_options
+
 	def marking(self):
 		self.answer = input("Enter Choice: 1,2,3,4,S : S is to skip question: ")
 		try:
@@ -52,6 +88,16 @@ class Question():
 		else:
 			self.obtained_marks = self.marks[1]
 
+		return self.obtained_marks
+
+	def marking_gui(self, option, del_label):
+		if(self.options[int(self.correct)-1] == option):
+			self.obtained_marks = self.marks[0]
+		elif option == "Skip this question" and not self.comp :
+			self.obtained_marks = 0
+		else:
+			self.obtained_marks = self.marks[1]
+		del_label()
 		return self.obtained_marks
 
 	def decrement(self):
@@ -84,4 +130,4 @@ def quiz(raw_data):
 		comp = quest[-1]
 		question = Question(number, q, options, correct, marks, comp)
 		quiz_questions.append(question)
-		return quiz_questions
+	return quiz_questions
