@@ -53,14 +53,21 @@ def start_quiz(start_button, quiz_questions, main_window, background_color):
 	frame_timer = display(main_window, background_color)
 
 	for question in quiz_questions:
-		q = tk.Frame(main_window, background = background_color)
-		q.pack(side = "top", expand = 'True')
+		try:
+			q = tk.Frame(main_window, background = background_color)
+			q.pack(side = "top", expand = 'True')
+		except:
+			pass
+		
 		label_question, buttons_options = question.display_question_gui(q, background_color,lambda: destroy(label_question))
 		label_question.pack()
 		for option in buttons_options:
 			option.pack(expand = 'True', padx = 50, pady = (10,10))
 		q.wait_window(label_question)
-		q.pack_forget()
+		try:
+			q.pack_forget()
+		except:
+			pass
 		i += 1
 	
 	end_page(main_window)
