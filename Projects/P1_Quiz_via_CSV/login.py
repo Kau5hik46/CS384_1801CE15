@@ -49,7 +49,7 @@ class login_item():
 			activebackground = "#2e294e",
 			font = ("helvetica", 14),
 			justify = "left",
-			command = self.login_button_function)
+			command = partial(self.login_button_function, main_window, background_color))
 		self.button_register = tk.Button(
 			main_window,
 			text = "register",
@@ -69,16 +69,17 @@ class login_item():
 
 		return self.logged_in
 		
-	def login_button_function(self):
+	def login_button_function(self, main_window, background_color = 'white'):
 		self.username = self.field_username.get()
 		self.password = self.encrypt_password(self.field_password.get())
-		return self.login()
+		return self.login(main_window)
 
 	def register_button_function(self, main_window, background_color = 'white'):
 		self.button_login.destroy()
 		main_window.destroy()
 		main_window = tk.Frame(self.main_window, background = self.background_color)
 		main_window.pack()
+		self.main_window = main_window
 		self.label_register_username = tk.Label(
 			main_window,
 			text = "Enter your username",
@@ -189,7 +190,13 @@ class login_item():
 		else:
 			self.action = logintype
 
-	def login(self):
+	def login(self, main_window = None, background_color = 'red'):
+		try:
+			self.label_error.pack_forget()
+		except:
+			pass
+		if(main_window == None):
+			main_window = self.main_window
 		username = (self.username).upper()
 		password = self.password
 		database_name = self.database_name
@@ -200,13 +207,37 @@ class login_item():
 		try:
 			data = table1.select(table_name, username)
 			if data == None:
+				self.label_error = tk.Label(
+					main_window,
+					text = errors["wrong_username"],
+					font = ("helvetica", 20),
+					background = background_color,
+					fg = 'white',
+					justify = "center")
+				label_error.pack()
 				print(errors["wrong_username"])
 				return errors["wrong_username"]
 		except:
+			self.label_error = tk.Label(
+				main_window,
+				text = errors["wrong_username"],
+				font = ("helvetica", 20),
+				background = "red",
+				fg = 'white',
+				justify = "center")
+			self.label_error.pack()
 			print(errors["wrong_username"])
 			return errors["wrong_username"]
 		
 		if data[2] != password:
+			self.label_error = tk.Label(
+				main_window,
+				text = errors["wrong_password"],
+				font = ("helvetica", 20),
+				background = "red",
+				fg = 'white',
+				justify = "center")
+			self.label_error.pack()
 			print(errors["wrong_password"])
 			return errors["wrong_password"]
 			self.prompt('forgot')

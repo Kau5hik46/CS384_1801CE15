@@ -104,19 +104,43 @@ class Question():
 		time.sleep(1)
 		self.time_remaining -= 1
 
-	def timer(self, total_minutes):
-		self.time_remaining  = total_minutes * 60
+	def timer(self, total_minutes = None):
+		if total_minutes != None:
+			self.time_remaining  = total_minutes * 60
 		while self.time_remaining > 0:
 			self.decrement()
-			terminal("clear")
-			minutes = self.time_remaining // 60
-			seconds = self.time_remaining % 60
-			print(minutes, end = ':')
-			print(seconds)
-		return minutes, seconds
+			self.minutes = self.time_remaining // 60
+			self.seconds = self.time_remaining % 60
+		return self.minutes, self.seconds
+
+	def timer_gui(self, details_frame, background_color = 'white',total_minutes = None):
+		if total_minutes != None:
+			self.time_remaining  = total_minutes * 60
+		# while self.time_remaining > 0:
+			# self.decrement()
+		self.minutes = self.time_remaining // 60
+		self.seconds = self.time_remaining % 60
+		self.label_minutes = tk.Label(
+			details_frame,
+			text = "Timer: " + str(self.minutes),
+			font = ("helvetica", 20),
+			background = background_color,
+			justify = "center"
+			)
+		self.label_seconds = tk.Label(
+			details_frame,
+			text = ":" + str(self.seconds),
+			font = ("helvetica", 20),
+			background = background_color,
+			justify = "center"
+			)
+		return self.time_remaining, self.label_minutes, self.label_seconds
 
 def total_marks(current_marks, obtained_marks):
 	return current_marks + obtained_marks
+
+def marking(quiz_questions):
+	pass
 
 def quiz(raw_data):
 	quiz_questions = []

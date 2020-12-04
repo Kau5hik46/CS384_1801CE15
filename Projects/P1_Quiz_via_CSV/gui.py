@@ -1,10 +1,26 @@
 import tkinter as tk
+import time
+from functools import partial
 from tkinter import ttk
 from question import *
 from iohandling import csvhandler
 from iohandling import *
 from login import *
-import multiprocessing as mp
+from timer import *
+
+def display(main_window, background_color):
+	frame_timer = tk.Frame(main_window, background = background_color)
+	frame_timer.pack()
+	label_timer = tk.Label(
+		frame_timer,
+		text = "timer",
+		font = ("helvetica", 40),
+		background = background_color,
+		justify = "center"
+		)
+	label_timer.pack()
+	timer(label_timer, 10, lambda: end_page(main_window))
+	return frame_timer
 
 def login_page(start_button,main_window, background_color):
 	destroy(start_button)
@@ -12,7 +28,7 @@ def login_page(start_button,main_window, background_color):
 	lgn.main_window = main_window
 	lgn.background_color = background_color
 	login_window = tk.Frame(main_window, background = background_color)
-	login_window.pack()
+	login_window.pack(expand = 'True')
 	lgn.login_window = login_window
 	x = lgn.get_info_gui(login_window, background_color)
 	try:
@@ -23,21 +39,35 @@ def login_page(start_button,main_window, background_color):
 		login_window.pack_forget()
 		start_quiz(button_start, quiz_questions, main_window, background_color)
 
-def end_page():
-	main_window.destroy()
+def end_page(main_window):
+	try:
+		main_window.destroy()
+	except:
+		pass
 
 def start_quiz(start_button, quiz_questions, main_window, background_color):
 	start_button.destroy()
+	i = 0
+
+	frame_timer = display(main_window, background_color)
+	# frame_timer.wait_window()
 	for question in quiz_questions:
 		q = tk.Frame(main_window, background = background_color)
-		q.pack()
+		q.pack(side = "top", expand = 'True')
 		label_question, buttons_options = question.display_question_gui(q, background_color,lambda: destroy(label_question))
 		label_question.pack()
 		for option in buttons_options:
-			option.pack()
-		main_window.wait_window(label_question)
+			option.pack(expand = 'True', padx = 50, pady = (10,10))
+		q.wait_window(label_question)
 		q.pack_forget()
-	end_page()
+		i += 1
+
+	# try:
+	# 	main_window.wait_window(frame_timer)
+	# except:
+	# 	end_page(main_window)
+	
+	end_page(main_window)
 
 def destroy(tkobj):
 	tkobj.destroy()
@@ -57,18 +87,21 @@ open_dir(root_folder)
 
 quiz_questions = quiz(raw_data)
 
-global main_window
+# global main_window
 main_window = tk.Tk()
 main_window.geometry("800x600")
 background_color = "#E8C547"
 main_window.config(background = background_color)
 
-# button_start = tk.Button(main_window, text ="open", command = lambda: start_quiz(button_start, quiz_questions, main_window, background_color))
-# button_start.pack()
-
 button_start = tk.Button(main_window, text ="open", bg = "#541388",command = lambda: login_page(button_start, main_window, background_color))
-button_start.pack()
+button_start.pack(expand = 'True')
 
 main_window.mainloop()
+try:
+	main_window.wait_window(main_window)
+except:
+	pass
+
+end_page(main_window)
 
 
