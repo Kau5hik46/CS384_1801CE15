@@ -38,6 +38,7 @@ def login_page(start_button,main_window, background_color):
 	if(lgn.logged_in == True):
 		login_window.pack_forget()
 		start_quiz(button_start, quiz_questions, main_window, background_color)
+	# return lgn.data
 
 def end_page(main_window):
 	try:
@@ -50,7 +51,7 @@ def start_quiz(start_button, quiz_questions, main_window, background_color):
 	i = 0
 
 	frame_timer = display(main_window, background_color)
-	# frame_timer.wait_window()
+
 	for question in quiz_questions:
 		q = tk.Frame(main_window, background = background_color)
 		q.pack(side = "top", expand = 'True')
@@ -61,11 +62,6 @@ def start_quiz(start_button, quiz_questions, main_window, background_color):
 		q.wait_window(label_question)
 		q.pack_forget()
 		i += 1
-
-	# try:
-	# 	main_window.wait_window(frame_timer)
-	# except:
-	# 	end_page(main_window)
 	
 	end_page(main_window)
 
@@ -93,7 +89,7 @@ main_window.geometry("800x600")
 background_color = "#E8C547"
 main_window.config(background = background_color)
 
-button_start = tk.Button(main_window, text ="open", bg = "#541388",command = lambda: login_page(button_start, main_window, background_color))
+button_start = tk.Button(main_window, text ="Start", bg = "#541388",font = ("Helvetica", 20),command = lambda: login_page(button_start, main_window, background_color))
 button_start.pack(expand = 'True')
 
 main_window.mainloop()

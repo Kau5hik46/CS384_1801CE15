@@ -4,7 +4,7 @@ from dbhandler import dbhandler
 from functools import partial
 import tkinter as tk
 
-errors = {"wrong_username" :"Invalid username/roll number. Try again.", "wrong_password" : "Please enter correct password"}
+errors = {"wrong_username" :"Invalid username/roll number. Try again.", "wrong_password" : "Please enter correct password", "no_input": "Please fill necessary field(s)"}
 
 class login_item():
 	def __init__(self, db = "project1_quiz_cs384.db"):
@@ -26,7 +26,10 @@ class login_item():
 			elif (self.action == 'register'):
 				self.register()
 
-	def get_info_gui(self, main_window, background_color = 'white'):
+	def get_info_gui(self, main_window, background_color = 'white', destroy = False):
+		if(destroy == True):
+			for widget in main_window.winfo_children():
+				widget.destroy()
 		self.label_username = tk.Label(
 			main_window,
 			text = "Username",
@@ -58,12 +61,12 @@ class login_item():
 			font = ("helvetica", 14),
 			justify = "left",
 			command = partial(self.register_button_function, main_window, background_color))
-		self.label_username.pack()
-		self.field_username.pack()
-		self.label_password.pack()
-		self.field_password.pack()
-		self.button_login.pack()
-		self.button_register.pack()
+		self.label_username.pack(pady = 10)
+		self.field_username.pack(pady = 10)
+		self.label_password.pack(pady = 10)
+		self.field_password.pack(pady = 10)
+		self.button_login.pack(pady = 10)
+		self.button_register.pack(pady = 10)
 
 		main_window.wait_window(self.button_login)
 
@@ -72,14 +75,32 @@ class login_item():
 	def login_button_function(self, main_window, background_color = 'white'):
 		self.username = self.field_username.get()
 		self.password = self.encrypt_password(self.field_password.get())
+		if(self.username == ''):
+			try:
+				self.label_error.destroy()
+			except:
+				pass
+			self.label_error = tk.Label(
+				main_window,
+				text = errors["no_input"],
+				font = ("helvetica", 20),
+				background = "red",
+				fg = 'white',
+				justify = "center")
+			self.label_error.pack(pady = (10,10))
+			main_window.wait_window(self.label_error)
+
+
 		return self.login(main_window)
 
 	def register_button_function(self, main_window, background_color = 'white'):
-		self.button_login.destroy()
-		main_window.destroy()
-		main_window = tk.Frame(self.main_window, background = self.background_color)
-		main_window.pack()
+		# main_window.destroy()
+		# main_window = tk.Frame(self.main_window, background = self.background_color)
+		# main_window.pack()
+		for widget in main_window.winfo_children():
+			widget.destroy()
 		self.main_window = main_window
+
 		self.label_register_username = tk.Label(
 			main_window,
 			text = "Enter your username",
@@ -122,24 +143,38 @@ class login_item():
 			text = "complete registration",
 			bg = "#541388",
 			activebackground = "#2e294e",
-			font = ("helvetica", 14),
+			font = ("helvetica", 20),
 			justify = "left",
 			command = partial(self.register_gui, main_window, background_color))
 
-		self.label_register_username.pack()
-		self.field_register_username.pack()
-		self.label_register_name.pack()
-		self.field_register_name.pack()
-		self.label_register_whatsapp.pack()
-		self.field_register_whatsapp.pack()
-		self.label_register_password.pack()
-		self.field_register_password.pack()
-		self.label_register_confirm.pack()
-		self.field_register_confirm.pack()
-		self.button_register_details.pack()
+		self.button_login_page = tk.Button(
+			main_window,
+			text = "go back to login page",
+			bg = "#541388",
+			activebackground = "#2e294e",
+			font = ("helvetica", 14),
+			justify = "left",
+			command = partial(self.get_info_gui, main_window, background_color, destroy = True))
+
+		self.label_register_username.pack(pady = 10, expand = 'True')
+		self.field_register_username.pack(expand = 'True')
+		self.label_register_name.pack(pady = 10, expand = 'True')
+		self.field_register_name.pack(expand = 'True')
+		self.label_register_whatsapp.pack(pady = 10, expand = 'True')
+		self.field_register_whatsapp.pack(expand = 'True')
+		self.label_register_password.pack(pady = 10, expand = 'True')
+		self.field_register_password.pack(expand = 'True')
+		self.label_register_confirm.pack(pady = 10, expand = 'True')
+		self.field_register_confirm.pack(expand = 'True')
+		self.button_register_details.pack(pady = 10, expand = 'True')
+		self.button_login_page.pack(pady = 10)
+		self.label_error.pack()
 		main_window.wait_window(self.button_register_details)
 
-	def register_gui(self,main_window, background_color = 'white'):
+	def register_gui(self, main_window, background_color = 'white'):
+		# for widget in main_window.winfo_children():
+		# 	widget.destroy()
+		self.main_window = main_window
 		database_name = self.database_name
 		table_name = self.table_name
 		index_tuples = self.index_tuples
@@ -154,6 +189,20 @@ class login_item():
 		password = self.encrypt_password(password)
 		whatsapp = self.field_register_whatsapp.get()
 		values = list((name, roll, password, whatsapp))
+		if '' in values:
+			try:
+				self.label_error.destroy()
+			except:
+				pass
+			self.label_error = tk.Label(
+				main_window,
+				text = errors["no_input"],
+				font = ("helvetica", 20),
+				background = "red",
+				fg = 'white',
+				justify = "center")
+			self.label_error.pack(pady = (10,10))
+			main_window.wait_window(self.label_error)
 		inserted = table1.insert(table_name, values)
 		self.username = roll
 		self.password = password
@@ -191,14 +240,21 @@ class login_item():
 			self.action = logintype
 
 	def login(self, main_window = None, background_color = 'red'):
-		try:
-			self.label_error.pack_forget()
-		except:
-			pass
+
 		if(main_window == None):
 			main_window = self.main_window
 		username = (self.username).upper()
 		password = self.password
+		if(username == ''):
+			self.label_error = tk.Label(
+				main_window,
+				text = errors["no_input"],
+				font = ("helvetica", 20),
+				background = background_color,
+				fg = 'white',
+				justify = "center")
+			label_error.pack()
+
 		database_name = self.database_name
 		table_name = self.table_name
 		index_tuples = self.index_tuples
