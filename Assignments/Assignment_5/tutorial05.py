@@ -167,32 +167,32 @@ def rename_How_I_Met_Your_Mother(folder_name = "How I Met Your Mother"):
 				os.rename(subtitle, subtitle)
 
 # Driver Code
-
-series = {"FIR" : 1, "Game of Thrones" : 2, "How I Met Your Mother": 3, "Sherlock" : 4, "Suits" : 5}
+title_list = [1,2,3,4,5]
+series = ["FIR", "Game of Thrones", "How I Met Your Mother", "Sherlock", "Suits"]
 
 def prompt():
-	series_input = str(input('''1.FIR
+	series_input = int(input('''1.FIR
 2.Game of Thrones
 3.How I Met Your Mother
 4.Sherlock
 5.Suits
 Please enter the title of the Series: '''))
-	if series_input not in series.keys():
+	if series_input not in title_list:
 		series_input = prompt()
-	return series_input
+	return series_input - 1
 
-def rename(option = 0):
-	if(option == 0):
+def rename(option = -1):
+	if(option == -1):
 		return
-	elif option == series["FIR"]:
+	elif option == 0:
 		rename_FIR()
-	elif option == series["Game of Thrones"]:
+	elif option == 1:
 		rename_Game_of_Thrones()
-	elif option == series["Sherlock"]:
+	elif option == 2:
 		rename_Sherlock()
-	elif option	== series["Suits"]:
+	elif option	== 3:
 		rename_Suits()
-	elif option == series["How I Met Your Mother"]:
+	elif option == 4:
 		rename_How_I_Met_Your_Mother()
 	else:
 		rename(series[prompt()])
@@ -202,4 +202,4 @@ series_name = prompt()
 padding_season = int(input("Please enter season number padding: "))
 padding_episode = int(input("Please enter episode number padding: "))
 
-rename(series[series_name])
+rename(series_name)
