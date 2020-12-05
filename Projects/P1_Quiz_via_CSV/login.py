@@ -168,7 +168,7 @@ class login_item():
 		self.field_register_confirm.pack(expand = 'True')
 		self.button_register_details.pack(pady = 10, expand = 'True')
 		self.button_login_page.pack(pady = 10)
-		self.label_error.pack()
+		# self.label_error.pack()
 		main_window.wait_window(self.button_register_details)
 
 	def register_gui(self, main_window, background_color = 'white'):

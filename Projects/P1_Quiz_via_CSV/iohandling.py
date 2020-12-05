@@ -32,7 +32,7 @@ def delete(directory = None, file = None, pwd = pwd()):
 		return file
 
 class csvhandler():
-	def __init__(self, filename):
+	def __init__(self, filename = None):
 		self.input_file = filename
 		self.output_file = None
 		self.input_data = []
@@ -62,4 +62,4 @@ class csvhandler():
 	def make_csv(self, filename):
 		self.output_file = filename
 		for row in self.output_data:
-			append_row(row)
+			self.append_row(row)

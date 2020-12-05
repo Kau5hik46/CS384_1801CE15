@@ -16,6 +16,10 @@ class Question():
 		self.marks = tuple(marks)
 		self.obtained_marks = 0
 		self.correct = correct
+		self.answered = False
+		self.answer_correct = 'unattempted'
+		self.obtained_marks = 0
+		self.answer = 0
 
 		if comp.upper() == 'Y':
 			self.compulsory = "Yes"
@@ -39,8 +43,8 @@ class Question():
 	def display_question_gui(self, main_window, background_color,del_label):
 		label_question = tk.Label(
 			main_window,
-			text = self.question,
-			font = ("helvetica", 20),
+			text = str(self.qnum) + ")" + self.question + "\nCompulsory Question?: " + self.compulsory,
+			font = ("helvetica", 25),
 			background = background_color,
 			width = 500,
 			justify = "center",
@@ -54,7 +58,7 @@ class Question():
 				text = opt,
 				bg = "#541388",
 				activebackground = "#2e294e",
-				font = ("helvetica", 14),
+				font = ("helvetica", 20),
 				justify = "left",
 				command = partial(self.marking_gui, opt, del_label))
 			buttons_options.append(option)
@@ -62,7 +66,7 @@ class Question():
 		skip_option = tk.Button(
 			main_window,
 			text = "Skip this question",
-			font = ("helvetica", 14),
+			font = ("helvetica", 20),
 			bg = "#541388",
 			activebackground = "#d90368",
 			justify = "left",
@@ -91,11 +95,21 @@ class Question():
 		return self.obtained_marks
 
 	def marking_gui(self, option, del_label):
+		self.answered = True
+		self.answer = option
 		if(self.options[int(self.correct)-1] == option):
+			self.answer_correct = True
 			self.obtained_marks = self.marks[0]
 		elif option == "Skip this question" and not self.comp :
+			self.answer_correct = 'skipped'
 			self.obtained_marks = 0
+			self.answered = False
+		elif option == "Skip this question" and self.comp :
+			self.answer_correct = 'skipped'
+			self.obtained_marks = self.marks[1]
+			self.answered = False
 		else:
+			self.answer_correct = False
 			self.obtained_marks = self.marks[1]
 		del_label()
 		return self.obtained_marks
@@ -154,4 +168,16 @@ def quiz(raw_data):
 		comp = quest[-1]
 		question = Question(number, q, options, correct, marks, comp)
 		quiz_questions.append(question)
-	return quiz_questions
+	time = raw_data.headers[-1]
+	time = time.split("=")[-1]
+	time = time.strip()
+	unit = time[-1]
+	time = time.strip(unit)
+	time = int(time)
+	if(unit == 'h'):
+		multiplier = 3600
+	elif(unit == 'm'):
+		multiplier = 60
+	elif(unit == 's'):
+		multiplier = 1
+	return quiz_questions, time, multiplier

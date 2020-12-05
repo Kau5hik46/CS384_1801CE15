@@ -63,3 +63,8 @@ class dbhandler():
 		self.connection.execute(scrpit)
 		self.connection.commit()
 		return self.select(table_name, select_val, select_by)
+
+if __name__ == "__main__":
+	database_name = "project1_quiz_cs384.db"
+	# db = dbhandler(database_name, "Quiz_wise_marks", [("ROLL","TEXT", "PRIMARY KEY","NOT NULL"), ("QUIZ", "TEXT", "NOT NULL"), ("TOTAL", "TEXT", "NOT NULL")])
+	# print(db.select("Quiz_wise_marks", 'KK'))
