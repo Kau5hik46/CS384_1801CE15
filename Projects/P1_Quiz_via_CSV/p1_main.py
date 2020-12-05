@@ -40,6 +40,7 @@ def select_quiz(main_window):
 
 	raw_data = csvhandler(quiz_number_name)
 	raw_data.read_from_file()
+	global root_folder
 	open_dir(root_folder)
 
 	global time
@@ -91,6 +92,7 @@ def individual_response(user_data, quiz_number, quiz_questions):
 
 	# print(output.output_data)
 	output.make_csv(filename)
+	open_dir(root_folder)
 	return Total
 
 def display(main_window, background_color, user_data, quiz_questions):
@@ -105,7 +107,7 @@ def display(main_window, background_color, user_data, quiz_questions):
 		)
 	label_timer.pack()
 
-	timer(label_timer, 10, lambda: end_page(main_window, quiz_questions, user_data))
+	timer(label_timer, time, lambda: end_page(main_window, quiz_questions, user_data))
 
 	label_roll = label_timer = tk.Label(
 		frame_timer,
