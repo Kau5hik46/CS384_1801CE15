@@ -199,6 +199,9 @@ def rename(option = -1):
 
 series_name = prompt()
 
+global padding_episode
+global padding_season
+
 padding_season = int(input("Please enter season number padding: "))
 padding_episode = int(input("Please enter episode number padding: "))
 
