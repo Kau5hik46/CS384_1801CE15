@@ -50,6 +50,7 @@ class dbhandler():
 		index = ','.join(index)
 		scrpit = "SELECT "+ str(index) + " FROM "  + str(table_name) + " where " + str(select_by) + " = " + str(select_val)
 		selected = self.connection.execute(scrpit);
+		self.connection.commit()
 		return selected.fetchone()
 
 	def update(self, table_name, column, new_value, select_val, select_by = 'ROLL'):

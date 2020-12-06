@@ -240,7 +240,10 @@ class login_item():
 			self.action = logintype
 
 	def login(self, main_window = None, background_color = 'red'):
-
+		try:
+			self.label_error.destroy()
+		except:
+			pass
 		if(main_window == None):
 			main_window = self.main_window
 		username = (self.username).upper()

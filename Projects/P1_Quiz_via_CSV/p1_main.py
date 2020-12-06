@@ -280,7 +280,7 @@ if __name__ == "__main__":
 	folder_individual = "individual_responses"
 	global root_folder
 	root_folder = pwd()
-	
+	db = dbhandler(database_name, "Quiz_wise_marks", [("ROLL","TEXT", "PRIMARY KEY","NOT NULL"), ("QUIZ", "TEXT", "NOT NULL"), ("TOTAL", "TEXT", "NOT NULL")])
 	main_window = tk.Tk()
 	main_window.title("Quiz Portal")
 	main_window.geometry("800x600")
