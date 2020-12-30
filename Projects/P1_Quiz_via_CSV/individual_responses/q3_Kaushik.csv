@@ -47,3 +47,11 @@ ques_no,question,option1,option2,option3,option4,correct_option,marks_correct_an
 ,,,,,,,,,,,1,Unattempted
 ,,,,,,,,,,,-2,Marks Obtained
 ,,,,,,,,,,,17,Total Quiz Marks
+1,What city has the logngest flyover in india?,Hyderabad,Chennai, Mumbai,Pune,3,5,-1,No,Chennai
+2,4-4 =?,4,0,9,8,2,4,-1,Yes,0
+3,Capital of US?,New York,California,Washington,London,3,8,-2,No,0
+,,,,,,,,,,,1,Correct Choices
+,,,,,,,,,,,1,Wrong Choices
+,,,,,,,,,,,1,Unattempted
+,,,,,,,,,,,3,Marks Obtained
+,,,,,,,,,,,17,Total Quiz Marks
